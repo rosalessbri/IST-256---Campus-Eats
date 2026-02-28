@@ -1,9 +1,127 @@
 body {
-    background-color: #f8f9fa;
+  font-family: 'Segoe UI', 'Tahoma', 'Geneva', 'Verdana', 'sans-serif';
+  background-color: #f5f5f5; 
+  color: #1c3c88; 
+  margin: 0;
+  padding: 0;
 }
 
-.stars span {
-    font-size: 30px;
-    cursor: pointer;
-    color: gold;
+h1{
+  font-weight: bold;
+}
+
+h1, h2, h3, h4 {
+  color: #001e62;
+  margin-bottom: 20px;
+}
+
+.navbar-brand {
+  font-weight: bold;
+  color: #001e62 !important;
+}
+.nav-link.active {
+  font-weight: bold;
+  color: #ffc20e !important; 
+}
+.nav-link:hover {
+  color: #001e62 !important;
+}
+
+.hero {
+  background: url('https://images.unsplash.com/photo-1604908177521-f8a7e3f21f83?auto=format&fit=crop&w=1470&q=80') no-repeat center center/cover;
+  height: 60vh;
+  border-radius: 10px;
+  margin: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.hero h1 {
+  font-size: 3rem;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+  color: #ffffff;
+}
+.hero p {
+  font-size: 1.25rem;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+  color: #ffffff;
+}
+.hero .btn-primary {
+  background-color: #001e62;
+  border-color: #001e62;
+}
+.hero .btn-primary:hover {
+  background-color: #ffc20e;
+  color: #001e62;
+  border-color: #ffc20e;
+}
+
+.feature-card {
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 20px;
+  transition: transform 0.2s, box-shadow 0.2s;
+  text-align: center;
+}
+.feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+#memberForm {
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  margin-bottom: 50px;
+}
+
+.form-control, .form-select {
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.btn-primary {
+  background-color: #001e62;
+  border-color: #001e62;
+  font-weight: bold;
+}
+.btn-primary:hover {
+  background-color: #ffc20e;
+  color: #001e62;
+  border-color: #ffc20e;
+}
+
+#usersOutput .card {
+  background-color: #e7e7f5;
+  border-left: 5px solid #001e62;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 10px;
+}
+#usersOutput .card strong {
+  color: #001e62;
+}
+
+footer {
+  background-color: #ffffff;
+  padding: 20px 0;
+  text-align: center;
+  color: #1c3c88;
+  border-top: 1px solid #ccc;
+}
+
+@media (max-width: 768px) {
+  form, .hero {
+    padding: 20px;
+    margin: 15px;
+  }
+  .hero h1 {
+    font-size: 2rem;
+  }
+  .hero p {
+    font-size: 1rem;
+  }
 }

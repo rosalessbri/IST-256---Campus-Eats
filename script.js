@@ -1,73 +1,107 @@
-let reviews = [];
-let selectedRating = 0;
+let reviews = JSON.parse(localStorage.getItem('reviews')) || [];
 
-const stars = document.querySelectorAll("#stars span");
+const restaurantData = {
+  "Pollock": ["Edge", "Fresco", "Market", "Asia Kitchen", "Pollock Commons Buffet"],
+  "South": ["Amici", "Bowls @ South", "Choolaah Indian BBQ", "Edge", "Market", "On a Roll", "Redifer Grill", "Southside Buffet"],
+  "East": ["Aloha Fresh Poke Bowls", "Bowls @ East", "East Food District Buffet", "East Philly Cheesesteaks", "Edge", "Fresco", "Grillers", "Market", "On a Roll", "Pizza", "Pure"],
+  "North": ["Greens & Grains", "Halal Cart", "Market", "Northside Buffet"],
+  "West": ["Edge", "Market", "State Chik’n", "Waring Square Buffet"],
+  "Hub": ["Blue Burrito", "Burger King", "Cow & Cookie", "Grate Chee", "Hibachi-San", "Jamba", "McAlister’s Deli", "Panda Express", "Sbarro", "Slim Chickens", "Soup & Garden"]
+};
 
-// ⭐ Star Click Logic
-stars.forEach(star => {
-    star.addEventListener("click", function () {
-        selectedRating = this.getAttribute("data-value");
-        highlightStars(selectedRating);
-    });
-});
+const locationSelect = document.getElementById('location');
+const restaurantSelect = document.getElementById('restaurant');
+const memberForm = document.getElementById('memberForm');
+const output = document.getElementById('usersOutput');
+const topRankingsContainer = document.getElementById('topRankings');
 
-function highlightStars(rating) {
-    stars.forEach(star => {
-        if (star.getAttribute("data-value") <= rating) {
-            star.textContent = "★";
-        } else {
-            star.textContent = "☆";
-        }
-    });
+if(locationSelect) {
+  locationSelect.addEventListener('change', function() {
+    const selectedLocation = this.value;
+    restaurantSelect.innerHTML = '<option value="">Select Restaurant</option>';
+    if (selectedLocation && restaurantData[selectedLocation]) {
+      restaurantData[selectedLocation].forEach(r => {
+        const option = document.createElement('option');
+        option.value = r;
+        option.textContent = r;
+        restaurantSelect.appendChild(option);
+      });
+    }
+  });
 }
 
-document.getElementById("ratingForm").addEventListener("submit", function (event) {
-    event.preventDefault();
+if(memberForm) {
+  memberForm.addEventListener('submit', function(e) {
+    e.preventDefault();
 
-    let name = document.getElementById("name").value.trim();
-    let email = document.getElementById("email").value.trim();
-    let year = document.getElementById("year").value;
-    let restaurant = document.getElementById("restaurant").value;
-    let comment = document.getElementById("comment").value.trim();
-
-    if (name === "" || email === "" || year === "" || restaurant === "" || selectedRating === 0) {
-        alert("Please complete all required fields.");
-        return;
-    }
-
-    let review = {
-        name: name,
-        email: email,
-        year: year,
-        restaurant: restaurant,
-        rating: selectedRating,
-        comment: comment
+    const review = {
+      name: document.getElementById('name').value,
+      email: document.getElementById('email').value,
+      year: document.getElementById('year').value,
+      dorm: document.getElementById('dorm').value,
+      phone: document.getElementById('phone').value,
+      location: document.getElementById('location').value,
+      restaurant: document.getElementById('restaurant').value,
+      rating: Number(document.getElementById('rating').value),
+      comment: document.getElementById('comment').value
     };
 
     reviews.push(review);
-    displayReviews();
+    localStorage.setItem('reviews', JSON.stringify(reviews));
 
-    document.getElementById("ratingForm").reset();
-    highlightStars(0);
-    selectedRating = 0;
-});
+    displayReviews();
+    updateTopRankings();
+
+    memberForm.reset();
+  });
+}
 
 function displayReviews() {
-    let output = document.getElementById("output");
-    output.innerHTML = "";
-
-    reviews.forEach((review, index) => {
-        output.innerHTML += `
-            <div class="card mb-3">
-                <div class="card-body">
-                    <h5>${review.name} (${review.year})</h5>
-                    <p><strong>Restaurant:</strong> ${review.restaurant}</p>
-                    <p><strong>Rating:</strong> ${"★".repeat(review.rating)}</p>
-                    <p>${review.comment}</p>
-                </div>
-            </div>
-        `;
-    });
-
-    console.log(JSON.stringify(reviews, null, 2));
+  if(!output) return;
+  output.innerHTML = '';
+  reviews.forEach(r => {
+    const card = document.createElement('div');
+    card.className = 'card mb-2 p-2';
+    card.innerHTML = `
+      <strong>${r.name}</strong> (${r.year}) - ${r.dorm}<br>
+      Location: ${r.location} | Restaurant: ${r.restaurant} | Rating: ${r.rating}<br>
+      Comment: ${r.comment ? r.comment : 'N/A'}
+    `;
+    output.appendChild(card);
+  });
 }
+
+function updateTopRankings() {
+  if(!topRankingsContainer) return;
+
+  const restaurantMap = {};
+  reviews.forEach(r => {
+    if (!restaurantMap[r.restaurant]) restaurantMap[r.restaurant] = { total: 0, count: 0 };
+    restaurantMap[r.restaurant].total += r.rating;
+    restaurantMap[r.restaurant].count += 1;
+  });
+
+  const avgRatings = Object.keys(restaurantMap).map(name => ({
+    name,
+    avg: restaurantMap[name].total / restaurantMap[name].count
+  }));
+
+  avgRatings.sort((a, b) => b.avg - a.avg);
+
+  topRankingsContainer.innerHTML = '';
+  avgRatings.slice(0, 3).forEach(r => {
+    const card = document.createElement('div');
+    card.className = 'col-md-4 mb-3';
+    card.innerHTML = `
+      <div class="card p-3 shadow-sm">
+        <h5>${r.name}</h5>
+        <p>Average Rating: ${r.avg.toFixed(1)} ⭐</p>
+      </div>
+    `;
+    topRankingsContainer.appendChild(card);
+  });
+}
+
+displayReviews();
+updateTopRankings();
+
