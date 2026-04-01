@@ -9,85 +9,76 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
       <a class="navbar-brand" href="index.html">Campus Eats</a>
-      <div class="collapse navbar-collapse" id="navbarNav">
+      <div class="collapse navbar-collapse">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
           <li class="nav-item"><a class="nav-link" href="signup.html">Submit Review</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Rankings</a></li>
           <li class="nav-item"><a class="nav-link" href="dining.html">Explore Dining</a></li>
           <li class="nav-item"><a class="nav-link active" href="manageDining.html">Manage Dining</a></li>
-          <li class="nav-item"><a class="nav-link active" href="#">About</a></li>
         </ul>
       </div>
     </div>
   </nav>
 
   <div class="container mt-5">
-    <h2 class="text-center mb-4">Manage Dining</h2>
+    <h2 class="text-center mb-4">Manage Dining (Finalization Page)</h2>
 
     <form id="manageForm">
-      <div class="mb-3">
-        <label class="form-label">Restaurant ID *</label>
-        <input type="text" class="form-control" id="restaurantId" required>
-      </div>
+      <input type="text" id="restaurantId" class="form-control mb-2" placeholder="Restaurant ID *" required>
+      <input type="text" id="restaurantName" class="form-control mb-2" placeholder="Restaurant Name *" required>
 
-      <div class="mb-3">
-        <label class="form-label">Restaurant Name *</label>
-        <input type="text" class="form-control" id="restaurantName" required>
-      </div>
+      <select id="diningArea" class="form-select mb-2" required>
+        <option value="">Select Area</option>
+        <option>Pollock</option>
+        <option>South</option>
+        <option>East</option>
+        <option>North</option>
+        <option>West</option>
+        <option>HUB</option>
+      </select>
 
-      <div class="mb-3">
-        <label class="form-label">Dining Area *</label>
-        <select class="form-select" id="diningArea" required>
-          <option value="">Select Area</option>
-          <option>Pollock</option>
-          <option>South</option>
-          <option>East</option>
-          <option>North</option>
-          <option>West</option>
-          <option>HUB</option>
-        </select>
-      </div>
+      <select id="restaurantType" class="form-select mb-2" required>
+        <option value="">Select Type</option>
+        <option>Fast Casual</option>
+        <option>Cafe</option>
+        <option>Buffet</option>
+      </select>
 
-      <div class="mb-3">
-        <label class="form-label">Restaurant Type *</label>
-        <select class="form-select" id="restaurantType" required>
-            <option value="">Select Type</option>
-            <option>Fast Casual</option>
-            <option>Cafe</option>
-            <option>Buffet</option>
-        </select>
-    </div>
+      <input type="number" id="avgRating" class="form-control mb-2" placeholder="Rating (0-5)" min="0" max="5" step="0.1" required>
 
-      <div class="mb-3">
-        <label class="form-label">Average Rating *</label>
-        <input type="number" class="form-control" id="avgRating" min="0" max="5" step="0.1" required>
-      </div>
+      <textarea id="notes" class="form-control mb-2" placeholder="Notes"></textarea>
 
-      <div class="mb-3">
-        <label class="form-label">Additional Notes (Optional)</label>
-        <textarea class="form-control" id="notes"></textarea>
-      </div>
-
-      <button type="submit" class="btn btn-primary w-100">Add / Update Restaurant</button>
+      <button class="btn btn-primary w-100">Add / Update Restaurant</button>
     </form>
+
+    <!-- JSON OUTPUT -->
+    <h5 class="mt-4">JSON Output</h5>
+    <pre id="jsonOutput" class="bg-light p-3"></pre>
 
     <hr>
 
-    <div class="mb-3">
-      <label class="form-label">Search Restaurant:</label>
-      <input type="text" id="searchInput" class="form-control" placeholder="Search by name or area...">
-    </div>
+    <input type="text" id="searchInput" class="form-control mb-3" placeholder="Search...">
 
-    <h3 class="mt-4">Restaurant Entries</h3>
+    <h3>Restaurant Entries</h3>
     <div id="restaurantOutput"></div>
+
+    <!-- React Summary -->
+    <div id="reactSummary" class="mt-4"></div>
   </div>
 
+  <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <!-- React -->
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
   <script src="manageDining.js"></script>
+
 </body>
 </html>
