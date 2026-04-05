@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="ordersApp">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Returns / Orders - Campus Eats</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+
+  <style>
+    .card {
+      margin-bottom: 15px;
+    }
+  </style>
+</head>
+
+<body ng-controller="OrdersController" class="container my-5">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="index.html">Campus Eats</a>
+
+      <ul class="navbar-nav ms-auto">
+         <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="signup.html">Submit Review</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Rankings</a></li>
+          <li class="nav-item"><a class="nav-link" href="dining.html">Explore Dining</a></li>
+          <li class="nav-item"><a class="nav-link" href="manageDining.html">Manage Dining</a></li>
+          <li class="nav-item"><a class="nav-link" href="account.html">Account</a></li>
+      </ul>
+    </div>
+  </nav>=
+
+  <h2 class="text-center mb-4">Returns / Orders</h2>
+
+  <input type="text" id="searchInput" class="form-control mb-4" placeholder="Search orders...">
+
+  <div class="row">
+
+    <div class="col-md-6 order-card" ng-repeat="order in orders">
+
+      <div class="card p-3 shadow-sm">
+
+        <h5>Order #{{order.id}}</h5>
+        <p><strong>Status:</strong> {{order.status}}</p>
+
+        <ul class="list-group mb-3">
+          <li class="list-group-item d-flex justify-content-between"
+              ng-repeat="item in order.items">
+            {{item.name}}
+            <span>${{item.price}}</span>
+          </li>
+        </ul>
+
+        <p><strong>Total:</strong> ${{order.total}}</p>
+
+        <div class="d-flex gap-2">
+
+          <button class="btn btn-warning btn-sm w-50"
+                  ng-click="cancelOrder(order)">
+            Cancel
+          </button>
+
+          <button class="btn btn-danger btn-sm w-50"
+                  ng-click="refundOrder(order)">
+            Refund
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+    const app = angular.module("ordersApp", []);
+
+    app.controller("OrdersController", function($scope, $http) {
+      $scope.orders = JSON.parse(localStorage.getItem("orders")) || [];
+
+      console.log("Loaded Orders:", $scope.orders);
+
+      $scope.cancelOrder = function(order) {
+        if (order.status !== "active") {
+          alert("Already processed.");
+          return;
+        }
+
+        order.status = "cancelled";
+
+        localStorage.setItem("orders", JSON.stringify($scope.orders));
+
+        $http.post("http://localhost:3000/return", order)
+          .then(function() {
+            alert("Order cancelled & sent to server.");
+          });
+
+      };
+
+      $scope.refundOrder = function(order) {
+        if (order.status !== "active") {
+          alert("Already processed.");
+          return;
+        }
+
+        order.status = "refunded";
+
+        localStorage.setItem("orders", JSON.stringify($scope.orders));
+
+        $http.post("http://localhost:3000/return", order)
+          .then(function() {
+            alert("Refund processed & sent to server.");
+          });
+
+      };
+
+    });
+
+    $("#searchInput").on("keyup", function() {
+      let value = $(this).val().toLowerCase();
+
+      $(".order-card").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+      });
+    });
+  </script>
+
+</body>
+</html>

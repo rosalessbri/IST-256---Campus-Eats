@@ -6,183 +6,180 @@
   <title>Campus Eats</title>
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
   <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
 
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
       <a class="navbar-brand" href="index.html">Campus Eats</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-              aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
+
+      <ul class="navbar-nav ms-auto">
+         <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
           <li class="nav-item"><a class="nav-link" href="signup.html">Submit Review</a></li>
           <li class="nav-item"><a class="nav-link" href="#">Rankings</a></li>
           <li class="nav-item"><a class="nav-link" href="dining.html">Explore Dining</a></li>
           <li class="nav-item"><a class="nav-link" href="manageDining.html">Manage Dining</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">About</a></li>
-        </ul>
-      </div>
+          <li class="nav-item"><a class="nav-link" href="account.html">Account</a></li>
+      </ul>
     </div>
   </nav>
 
   <header class="bg-primary text-white text-center py-5">
     <div class="container">
       <h1 class="display-4">Welcome to Campus Eats</h1>
-      <h7 class="display-5"> Your Guide to Penn State Dining!</h7>
-      <p class="lead mt-3">Rate, rank, and review all the on-campus dining spots. Help fellow Nittany Lions find the best places to grab a bite!</p>
-      <a href="signup.html" class="btn btn-light btn-lg mt-3">Submit Your Review</a>
+      <h5 class="display-6">Your Guide to Penn State Dining!</h5>
+      <p class="lead mt-3">
+        Rate, rank, and review all the on-campus dining spots.
+      </p>
+      <a href="signup.html" class="btn btn-light btn-lg mt-3">
+        Submit Your Review
+      </a>
     </div>
   </header>
 
   <section class="py-5">
-    <div class="container">
-      <h2 class="text-center mb-4">Learn how Campus Eats works</h2>
-      <div class="row text-center">
-        <div class="col-md-4 mb-4">
+    <div class="container text-center">
+      <h2 class="mb-4">Learn how Campus Eats works</h2>
+
+      <div class="row">
+        <div class="col-md-4">
           <h5>1. Submit a Review</h5>
-          <p>Tell us about your favorite dining spot — one restaurant per submission.</p>
+          <p>Share your experience at campus dining locations.</p>
         </div>
-        <div class="col-md-4 mb-4">
+
+        <div class="col-md-4">
           <h5>2. See Rankings</h5>
-          <p>Check the best-rated Dining Commons and HUB locations based on student feedback.</p>
+          <p>Check top-rated dining options from student feedback.</p>
         </div>
-        <div class="col-md-4 mb-4">
+
+        <div class="col-md-4">
           <h5>3. Make Decisions</h5>
-          <p>Use the rankings to plan your meals and explore new dining options on campus.</p>
+          <p>Use rankings to decide where to eat.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="container my-5" id="top-rankings-section">
-    <h2 class="text-center mb-4">Top-Ranked Restaurants</h2>
-    <div id="topRankings" class="row"></div>
-</section>
-
-<hr>
-<section class = "container my-5">
-    <h2 class = "text-center mb-4">Campus Eats Subscriptions</h2>
+  <section class="container my-5">
+    <h2 class="text-center mb-4">Campus Eats Subscriptions</h2>
 
     <div id="subscriptionOutput" class="row"></div>
-    <h4 class = "mt-4">Your Subscription Cart</h4>
-    <ul id ="listCart" class ="list-group mb-3"></ul>
-    <p> Total: $<span id="cartTotal">0.00</span></p>
 
-    <div class ="d-flex gap-2"></div>
-    <button id ="checkoutBtn" class = "btn btn-success w-100">
-        checkout
-    </button>
-    <button id ="clearCartBtn" class = "btn btn-secondary">Clear Cart</button>
-    
-</section>
+    <h4 class="mt-4">Your Subscription Cart</h4>
+    <ul id="listCart" class="list-group mb-3"></ul>
+
+    <p>Total: $<span id="cartTotal">0.00</span></p>
+
+    <div class="d-flex gap-2">
+      <button id="checkoutBtn" class="btn btn-success w-100">
+        Checkout
+      </button>
+
+      <button id="clearCartBtn" class="btn btn-secondary w-100">
+        Clear Cart
+      </button>
+    </div>
+  </section>
 
   <footer class="bg-light text-center py-3">
-    <p class="mb-0">&copy; 2026 Campus Eats. All Rights Reserved. IST 256.</p>
+    <p class="mb-0">&copy; 2026 Campus Eats. All Rights Reserved.</p>
   </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
   <script>
-    let subscriptions = [{id: "subbasic", name: "Basic Subscription", description: "Premium review power", price: 3.99},
-    {id: "subpremium", name: "Premium Subscription", description: "Access to more rankings", price:6.99},
-    {id: "deluxesub", name: "Deluxe Subscription", description: "Premium review power, access to more rankings, and access to upload photo and video reviews.", price: 9.99}
-];
-let cart = [];
+document.addEventListener("DOMContentLoaded", () => {
 
-function manageSubscriptions()
-{
+  let subscriptions = [
+    { id: "subbasic", name: "Basic Subscription", description: "Premium review power", price: 3.99 },
+    { id: "subpremium", name: "Premium Subscription", description: "Access to more rankings", price: 6.99 },
+    { id: "deluxesub", name: "Deluxe Subscription", description: "Full access + media uploads", price: 9.99 }
+  ];
+
+  let cart = [];
+
+  function manageSubscriptions() {
     const container = document.getElementById("subscriptionOutput");
-    if(!container)
-        return;
     container.innerHTML = "";
 
-    subscriptions.forEach(sub =>
-    {
-        const div = document.createElement("div");
-        div.className = "col-md-4 mb-3";
+    subscriptions.forEach(sub => {
+      const div = document.createElement("div");
+      div.className = "col-md-4 mb-3";
 
-        div.innerHTML = `<div class ="card p-3">
-        <h5>${sub.name}</h5>
-        <p>${sub.description}</p>
-        <p><strong>$${sub.price}</strong></p>
-        <button class = "btn btn-primary" onclick ="addToCart('${sub.id}')">
-        Subscribe
-        </button>
-        </div>`;
-        container.appendChild(div);
-    }
-    );
+      div.innerHTML = `
+        <div class="card p-3">
+          <h5>${sub.name}</h5>
+          <p>${sub.description}</p>
+          <p><strong>$${sub.price}</strong></p>
+          <button class="btn btn-primary" onclick="addToCart('${sub.id}')">
+            Subscribe
+          </button>
+        </div>
+      `;
 
-}
-function addToCart(id)
-{
+      container.appendChild(div);
+    });
+  }
+
+  window.addToCart = function(id) {
     const item = subscriptions.find(s => s.id === id);
     cart.push(item);
     showCart();
-}
-function showCart()
-{
+  }
+
+  function showCart() {
     const listCart = document.getElementById("listCart");
     const totalEl = document.getElementById("cartTotal");
-    if(!listCart)
-        return;
+
     listCart.innerHTML = "";
+
     let total = 0;
+
     cart.forEach((item, index) => {
-        total += item.price;
-        const li = document.createElement("li");
-        li.className = "list-group-item d-flex justify-content-between";
-        li.innerHTML = `
+      total += item.price;
+
+      const li = document.createElement("li");
+      li.className = "list-group-item d-flex justify-content-between";
+
+      li.innerHTML = `
         ${item.name} - $${item.price.toFixed(2)}
-        <button class = "btn btn-danger btn-sm" onclick ="removeFromCart(${index})">
-        Remove
+        <button class="btn btn-danger btn-sm" onclick="removeFromCart(${index})">
+          Remove
         </button>
-        `;
-        listCart.appendChild(li);
+      `;
+
+      listCart.appendChild(li);
     });
+
     totalEl.textContent = total.toFixed(2);
-}
-function removeFromCart(index)
-{
+  }
+
+  window.removeFromCart = function(index) {
     cart.splice(index, 1);
     showCart();
-}
-manageSubscriptions();
-showCart();
-const checkoutBtn = document.getElementById("checkoutBtn");
-if(checkoutBtn)
-{
-    checkoutBtn.addEventListener("click", () =>{
-        if(cart.length == 0)
-    {
-        alert("Cart is empty!");
-        return;
-    }
-    //go to page here
-    window.location.href = "billing.html";
-    alert("Checkout successful!");
-    cart = [];
-    showCart();
-    });
-    const clearBtn = document.getElementById("clearCartBtn");
-    if(clearBtn)
-    {
-        clearBtn.addEventListener("click", () =>{
-            cart = [];
-            showCart();
-        })
-    }
-}
+  }
 
-  </script>
-</body>
-</html>
-  </script>
+  manageSubscriptions();
+  showCart();
+
+  const checkoutBtn = document.getElementById("checkoutBtn");
+  const clearBtn = document.getElementById("clearCartBtn");
+
+  checkoutBtn.addEventListener("click", () => {
+  if (cart.length === 0) {
+    alert("Cart is empty!");
+    return;
+  }
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+
+  console.log("Saved cart:", localStorage.getItem("cart"));
+
+  window.location.href = "billing.html";
+});
+
+});
+</script>
+
 </body>
 </html>
