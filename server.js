@@ -35,7 +35,7 @@ comment TEXT);
 
 CREATE TABLE IF NOT EXISTS dining_locations(
 id INT AUTO_INCREMENT PRIMARY KEY,
-name VARCHAR(150) NOT NULL.
+name VARCHAR(150) NOT NULL,
 description TEXT,
 hours VARCHAR(300),
 image_url VARCHAR(400));
@@ -47,9 +47,29 @@ plan VARCHAR(50) NOT NULL,
 price DECIMAL(6,2) NOT NULL);
 `;
 
-db.query(createTables, err =>{
+db.query(createTable, err =>{
     if(err) console.log('There was an error creating your table!', err.message);
     else
         console.log('Your tables were succesfully created');
 
+});
+// TEST ROUTE (this proves server works)
+app.get('/', (req, res) => {
+    res.send("Server is running");
+});
+
+// OPTIONAL: test database route
+app.get('/test-db', (req, res) => {
+    db.query("SELECT 1", (err, result) => {
+        if (err) {
+            res.send("Database connection failed");
+        } else {
+            res.send("Database is connected");
+        }
+    });
+});
+
+// START SERVER
+app.listen(3000, () => {
+    console.log("Server running on port 3000");
 });
