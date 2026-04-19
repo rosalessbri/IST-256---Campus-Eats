@@ -58,7 +58,7 @@ app.get('/', (req, res) => {
     res.send("Server is running");
 });
 
-// OPTIONAL: test database route
+
 app.get('/test-db', (req, res) => {
     db.query("SELECT 1", (err, result) => {
         if (err) {
